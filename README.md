@@ -10,5 +10,6 @@ This project is organized into the following documents:
 * **[MVP Plan](./docs/mvp.md):** A detailed plan for the Minimum Viable Product (MVP), focusing on the core "First Contribution Finder" feature.
 * **[Development Roadmap](./docs/roadmap.md):** The phased development roadmap, from initial setup to deployment and future features.
 * **[Docker Setup](./docs/docker.md):** Instructions for setting up the local PostgreSQL database using Docker.
+* **[Cheatsheet](./docs/cheatsheet.md):** A quick reference for common project commands and Git workflow.
 
 Please review these documents to understand the full scope and plan for this project.
