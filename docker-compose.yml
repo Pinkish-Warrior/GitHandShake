@@ -1,0 +1,22 @@
+
+
+services:
+  db:
+    image: postgres:16-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=open_source_navigator
+    ports:
+      - '5432:5432'
+    volumes:
+      # This volume persists the database data across container restarts
+      - db_data:/var/lib/postgresql/data
+      # This mounts the schema file to initialize the database on first run
+      # It will execute the schema.sql script when the container starts for the first time
+      - ./db/schema.sql:/docker-entrypoint-initdb.d/init.sql
+
+volumes:
+  db_data:
+    # This defines the named volume for data persistence
