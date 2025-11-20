@@ -1,12 +1,11 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Octokit } from '@octokit/rest';
-import { App } from '@octokit/app';
+import { createAppAuth } from '@octokit/auth-app';
 
 @Injectable()
 export class GithubService {
-  private octokit: Octokit;
-  private app: App;
+  private auth: any;
 
   constructor(private readonly configService: ConfigService) {
     const appId = this.configService.get<number>('GITHUB_APP_ID');
@@ -18,38 +17,35 @@ export class GithubService {
       throw new InternalServerErrorException('Missing GitHub App configuration environment variables.');
     }
 
-    this.app = new App({
+    this.auth = createAppAuth({
       appId,
       privateKey,
-      oauth: {
-        clientId,
-        clientSecret,
-      },
+      clientId,
+      clientSecret,
     });
-
-    this.octokit = new Octokit(); // Initialize without auth for now, will use installation token later
   }
 
   getGithubAppId(): number {
     return this.configService.get<number>('GITHUB_APP_ID');
   }
 
-  private async getInstallationAccessToken(owner: string, repo: string): Promise<string> {
-    const installation = await this.app.octokit.request('GET /repos/{owner}/{repo}/installation', {
+  private async getInstallationOctokit(owner: string, repo: string): Promise<Octokit> {
+    const installation = await new Octokit({ authStrategy: this.auth, auth: { type: 'app' } }).request('GET /repos/{owner}/{repo}/installation', {
       owner,
       repo,
     });
 
-    const authentication = await this.app.getInstallationAccessToken({
-      installationId: installation.data.id,
+    const installationId = installation.data.id;
+    const installationAuth = await this.auth({
+      type: 'installation',
+      installationId,
     });
 
-    return authentication.token;
+    return new Octokit({ auth: installationAuth.token });
   }
 
   async findGoodFirstIssues(owner: string, repo: string): Promise<any[]> {
-    const token = await this.getInstallationAccessToken(owner, repo);
-    const octokit = new Octokit({ auth: token });
+    const octokit = await this.getInstallationOctokit(owner, repo);
 
     const { data: issues } = await octokit.rest.issues.listForRepo({
       owner,
