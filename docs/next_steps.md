@@ -35,3 +35,25 @@ With the backend foundation in place, work on the client-side application can be
 
   - Consider if any additional fields are needed for the `issues` or `users` tables based on the data that will be fetched from the GitHub API.
   - Create a seeding script to populate the database with initial sample data for development and testing purposes.
+
+---
+
+## Action Plan: Backend Issue Aggregation
+
+Here is a more detailed breakdown of the steps to implement the Issue Aggregation feature:
+
+1.  **Enhance `GithubService`:**
+    -   Add methods to authenticate as a GitHub App installation (using JWTs to get an installation access token).
+    -   Create a method to fetch issues from the GitHub API, allowing filtering by labels (e.g., `good first issue`).
+
+2.  **Create an `Issues` Module:**
+    -   Generate a new `IssuesModule`, `IssuesService`, and `IssuesController` using the NestJS CLI.
+    -   The `IssuesService` will contain the core business logic for orchestrating issue fetching and storage.
+
+3.  **Set Up Database Connection:**
+    -   Install and configure `@nestjs/typeorm` and `pg` to connect the server application to the PostgreSQL database.
+    -   Create a TypeORM entity for the `Issue` to map to the `issues` database table.
+
+4.  **Implement the `GET /issues` Endpoint:**
+    -   In the `IssuesController`, create the `GET /issues` endpoint.
+    -   This endpoint will use the `IssuesService` to retrieve the list of aggregated issues from the database and return them as a JSON response.
