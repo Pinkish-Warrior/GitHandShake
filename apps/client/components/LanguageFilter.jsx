@@ -1,4 +1,4 @@
-"use client"; //Stop rendering this component on the server
+"use client";
 
 import React, { useState } from 'react';
 
