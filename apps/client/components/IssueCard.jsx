@@ -1,16 +1,27 @@
 import React from 'react';
 
 const IssueCard = ({ issue }) => {
+  const { title, language, labels, url, description, stars, comments } = issue;
+
   return (
     <div className="issue-card">
-      <h3>{issue.title}</h3>
-      <p>{issue.description}</p>
+      <h3>
+        <a href={url} target="_blank" rel="noopener noreferrer">
+          {title}
+        </a>
+      </h3>
+      <p>{description}</p>
       <div className="issue-meta">
-        <span>Language: {issue.language}</span>
-        <span>Stars: {issue.stars}</span>
-        <span>Comments: {issue.comments}</span>
+        <div className="issue-details-left"> {/* New wrapper for left-aligned details */}
+          <span>Language: {language}</span>
+          {labels && labels.length > 0 && (
+            <span>Labels: {labels.join(', ')}</span>
+          )}
+          <span>Stars: {stars}</span>
+          <span>Comments: {comments}</span>
+        </div>
+        <a href={url} target="_blank" rel="noopener noreferrer" className="view-issue-link">View Issue</a>
       </div>
-      <a href={issue.url} target="_blank" rel="noopener noreferrer">View Issue</a>
     </div>
   );
 };

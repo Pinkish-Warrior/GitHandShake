@@ -1,74 +1,161 @@
 body {
-  font-family: sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   margin: 0;
-  background-color: #f0f2f5;
-  color: #333;
+  background-color: #f6f8fa;
+  color: #24292e;
 }
 
 .dashboard-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
 }
 
 .dashboard-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  padding: 16px 24px;
+  background-color: #ffffff;
+  border-bottom: 1px solid #d1d5da;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.dashboard-header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
 }
 
 .login-button {
   background-color: #24292e;
   color: white;
-  border: none;
-  padding: 10px 15px;
-  border-radius: 5px;
+  border: 1px solid rgba(27, 31, 35, 0.15);
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: 600;
   cursor: pointer;
+  transition: background-color 0.2s;
 }
 
-.filters-section {
-  margin-bottom: 20px;
+.login-button:hover {
+  background-color: #40464d;
+}
+
+.dashboard-main {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.filters-sidebar {
+  width: 260px;
+  padding: 24px;
+  background-color: #ffffff;
+  border-right: 1px solid #d1d5da;
+  overflow-y: auto;
+}
+
+.issues-content {
+  flex: 1;
+  padding: 24px;
+  overflow-y: auto;
+}
+
+.language-filter label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  font-size: 1rem;
 }
 
 .language-filter select {
-  padding: 8px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #d1d5da;
+  background-color: #f6f8fa;
+  font-size: 0.9rem;
 }
 
 .issue-list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: 20px;
 }
 
 .issue-card {
-  background-color: white;
-  border: 1px solid #e1e4e8;
+  background-color: #ffffff;
+  border: 1px solid #d1d5da;
   border-radius: 6px;
-  padding: 15px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  transition: box-shadow 0.2s;
+}
+
+.issue-card:hover {
+    box-shadow: 0 4px 12px rgba(27, 31, 35, 0.1);
 }
 
 .issue-card h3 {
   margin-top: 0;
+  margin-bottom: 8px;
+  font-size: 1.1rem;
+}
+
+.issue-card h3 a {
+  color: #0366d6;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.issue-card h3 a:hover {
+  text-decoration: underline;
+}
+
+.issue-card p {
+  flex-grow: 1;
+  color: #586069;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin-bottom: 12px;
 }
 
 .issue-meta {
-  font-size: 0.9em;
+  font-size: 0.8rem;
   color: #586069;
   display: flex;
   justify-content: space-between;
-  margin-top: 15px;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 12px;
+  border-top: 1px solid #e1e4e8;
+  padding-top: 12px;
 }
 
-.issue-card a {
-  display: inline-block;
-  margin-top: 15px;
+.issue-meta .issue-details-left {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.issue-meta span {
+    background-color: #f1f8ff;
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+.issue-card .view-issue-link {
   color: #0366d6;
   text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
 }
 
-.issue-card a:hover {
+.issue-card .view-issue-link:hover {
   text-decoration: underline;
 }

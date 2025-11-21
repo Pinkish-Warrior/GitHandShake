@@ -30,18 +30,20 @@ export class GithubService {
   }
 
   private async getInstallationOctokit(owner: string, repo: string): Promise<Octokit> {
-    const installation = await new Octokit({ authStrategy: this.auth, auth: { type: 'app' } }).request('GET /repos/{owner}/{repo}/installation', {
+    const appAuthentication = await this.auth({ type: 'app' });
+    const appOctokit = new Octokit({ auth: appAuthentication.token });
+
+    const { data: installation } = await appOctokit.apps.getRepoInstallation({
       owner,
       repo,
     });
 
-    const installationId = installation.data.id;
-    const installationAuth = await this.auth({
+    const installationAuthentication = await this.auth({
       type: 'installation',
-      installationId,
+      installationId: installation.id,
     });
 
-    return new Octokit({ auth: installationAuth.token });
+    return new Octokit({ auth: installationAuthentication.token });
   }
 
   async findGoodFirstIssues(owner: string, repo: string): Promise<any[]> {

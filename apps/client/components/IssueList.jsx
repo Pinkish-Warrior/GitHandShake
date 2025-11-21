@@ -1,5 +1,5 @@
 import React from 'react';
-import IssueCard from './IssueCard'; // Assuming IssueCard is in the same directory
+import IssueCard from './IssueCard';
 
 const IssueList = ({ issues }) => {
   return (
