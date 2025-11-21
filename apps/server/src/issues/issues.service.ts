@@ -14,7 +14,7 @@ export class IssuesService {
 
   async fetchAndSaveGoodFirstIssues(owner: string, repo: string): Promise<Issue[]> {
     const githubIssues = await this.githubService.findGoodFirstIssues(owner, repo);
-    const issuesToSave: Issue[] = githubIssues.map(issue => ({
+    const issuesToSave = githubIssues.map(issue => ({
       githubIssueId: issue.id,
       repoName: repo,
       issueUrl: issue.html_url,
